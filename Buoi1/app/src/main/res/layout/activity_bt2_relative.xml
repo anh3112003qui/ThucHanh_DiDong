@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+    <TextView
+        android:id="@+id/tv_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in"
+        android:textAllCaps="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_basex4"
+        android:textSize="@dimen/text_large"
+        />
+    <TextView
+        android:layout_marginTop="@dimen/margin_basex4"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:id="@+id/tv_user_name"
+        android:layout_below="@+id/tv_sign_in"
+        android:layout_alignParentLeft="true" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_username"
+        android:hint="name@gmail.com"
+        android:layout_alignTop="@+id/tv_user_name"
+        android:layout_toRightOf="@+id/tv_user_name"
+        />
+    <TextView
+        android:layout_marginTop="@dimen/margin_base"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:id="@+id/tv_password"
+        android:layout_below="@+id/et_username"
+        android:layout_alignParentLeft="true" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_password"
+        android:hint="*****"
+        android:inputType="textPassword"
+        android:layout_alignTop="@+id/tv_password"
+        android:layout_toRightOf="@+id/tv_password"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_base"
+        android:text="@string/sign_in"
+        android:id="@+id/btn_sign_in"
+        android:layout_marginTop="@dimen/margin_base"
+        android:layout_below="@+id/et_password"
+        android:layout_alignParentRight="true"/>
+
+    <Button
+        android:id="@+id/sign_in_big_btn"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="254dp"
+        android:layout_marginEnd="57dp"
+        android:layout_marginBottom="90dp"
+        android:text="Sign in via Facebook" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/sign_in_big_btn"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="57dp"
+        android:text="@string/signup" />
+</RelativeLayout>
