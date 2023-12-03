@@ -1,6 +1,5 @@
 package com.example.btth4_2_student;
 
-import static android.content.ContentValues.TAG;
 import static java.lang.Integer.parseInt;
 
 import androidx.appcompat.app.AlertDialog;
@@ -8,17 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,13 +26,11 @@ public class MainActivity extends AppCompatActivity {
     StudentAdapter adapter;
     DatabaseHelper myDB;
     Cursor cursor;
-
     private Parcelable recyclerViewState;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student_activity);
+        setContentView(R.layout.activity_main);
         myDB = new DatabaseHelper(this);
 
         edtCode = (EditText) findViewById(R.id.edtCode);
@@ -55,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         students = getData();
         showData(students);
-        //myDB.deleteAllData();
-
-
-
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 };
                 System.out.println(Integer.toString(adapter.row_index));
-                String row_index = Integer.toString(adapter.row_index+1);
 
-                boolean isUpdated = myDB.updateData(row_index ,edtCode.getText().toString(), edtName.getText().toString(),  edtMark.getText().toString());
+
+                boolean isUpdated = myDB.updateData(Integer.toString(getIdByIndex(adapter.row_index+1)) ,edtCode.getText().toString(), edtName.getText().toString(),  edtMark.getText().toString());
 
                 if(isUpdated){
                     Toast.makeText(MainActivity.this, "Data Updated", Toast.LENGTH_SHORT).show();
@@ -126,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     showMessage("Error","Please choose row to delte");
                     return;
                 };
-                Integer isDeleted  = myDB.deleteData(row_index);
+                Integer isDeleted  = myDB.deleteData(Integer.toString(getIdByIndex(adapter.row_index+1)));
                 if(isDeleted > 0){
                     Toast.makeText(MainActivity.this, "Data Deleted", Toast.LENGTH_SHORT).show();
                 }else{
@@ -137,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 myDB.ShowAllData();
             }
         });
-
     }
 
     private void showMessage(String title, String Message) {
@@ -147,6 +135,14 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(Message);
         builder.show();
     }
+    private void showData(ArrayList<Student> students) {
+        rcv_Student = (RecyclerView) findViewById(R.id.rcvStudent);
+        adapter = new StudentAdapter(this, R.layout.item_student, students);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rcv_Student.setLayoutManager(linearLayoutManager);
+        rcv_Student.setAdapter(adapter);
+    }
+
     private ArrayList<Student> getData() {
         ArrayList<Student> students = new ArrayList<Student>();
         cursor = myDB.getAllData();
@@ -159,19 +155,18 @@ public class MainActivity extends AppCompatActivity {
             {
                 _mark = "0";
             }
-            //System.out.println(_code);
-            //System.out.println(_name);
-            //System.out.println(_mark);
-            //System.out.println(parseInt(_mark));
             students.add(new Student(_code,_name,parseInt(_mark)));
         }
         return students;
     }
-    private void showData(ArrayList<Student> students) {
-        rcv_Student = (RecyclerView) findViewById(R.id.rcvStudent);
-        adapter = new StudentAdapter(this, R.layout.item_student, students);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rcv_Student.setLayoutManager(linearLayoutManager);
-        rcv_Student.setAdapter(adapter);
+
+    private int getIdByIndex(int index){
+        ArrayList<Student> students = new ArrayList<Student>();
+        cursor = myDB.getAllData();
+        for(int i = 0; i<index; i++){
+            cursor.moveToNext();
+        }
+        int id = cursor.getInt(0);
+        return id;
     }
 }

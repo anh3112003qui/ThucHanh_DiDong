@@ -1,12 +1,10 @@
 package com.example.btth4_2_student;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentHolder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentHolder>{
     private Activity context=null;
     private int layoutID;
     private List<Student> mListStudent;
@@ -98,7 +96,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentH
             }
         });
         if(row_index==position){
-            holder.student_item_layout.setBackgroundColor(R.color.teal_200);
+            holder.student_item_layout.setBackgroundColor(Color.GREEN);
         }
         else
         {

@@ -14,9 +14,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_COL_2 = "code";
     public static final String TABLE_COL_3 = "name";
     public static final String TABLE_COL_4 = "marks";
+    private Context context;
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
+        this.context = context;
     }
 
 
@@ -105,4 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME, null, null);
     }
 
+    public void deleteDatabase() {
+        context.deleteDatabase(DATABASE_NAME);
+    }
 }

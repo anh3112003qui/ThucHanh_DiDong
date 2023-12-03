@@ -1,15 +1,19 @@
 package com.example.btth6_1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
 
 public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver;
@@ -25,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         Object[] messages = (Object[]) bundle.get(SMS_EXTRA);
-        String sms = "";
+        String sms = tvContent.getText().toString();
 
         SmsMessage smsMsg;
         System.out.println("999999999999" + messages);
@@ -87,5 +91,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initBroadcastReceiver();
+        // Kiểm tra xem ứng dụng đã có quyền nhận SMS chưa
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Nếu chưa, yêu cầu quyền từ người dùng
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.RECEIVE_SMS},
+                    22);
+        }
     }
 }
