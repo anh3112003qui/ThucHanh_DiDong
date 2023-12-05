@@ -9,7 +9,7 @@
         android:id="@+id/etURL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3" />
+        android:text="https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3" />
 
     <Button
         android:id="@+id/btnStream"

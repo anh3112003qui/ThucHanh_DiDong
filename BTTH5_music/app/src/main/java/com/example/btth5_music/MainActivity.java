@@ -3,6 +3,7 @@ package com.example.btth5_music;
 import androidx.appcompat.app.AppCompatActivity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnStream, btnStop;
     EditText etURL;
     Boolean isStreaming = false;
-    MediaPlayer m;
+    MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,41 +24,43 @@ public class MainActivity extends AppCompatActivity {
         etURL = findViewById(R.id.etURL);
         btnStream = findViewById(R.id.btnStream);
         btnStop = findViewById(R.id.btnStop);
-        btnStream.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAudioStream(etURL.getText().toString());
-            }
+
+        btnStream.setOnClickListener(view -> {
+            String url = etURL.getText().toString();
+            new MediaPlayerAsyncTask().execute(url);
         });
 
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopPlaying();
-            }
-        });
+        btnStop.setOnClickListener(view -> stopPlaying());
     }
-    public void startAudioStream(String url) {
-        if (m == null)
-            m = new MediaPlayer();
+
+    private void startAudioStream(String url) {
         try {
-            m.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            m.setDataSource(url);
-            m.prepare();
-            m.setVolume(1f, 1f);
-            m.setLooping(false);
-            m.start();
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            mediaPlayer.setVolume(1f, 1f);
+            mediaPlayer.setLooping(false);
+            mediaPlayer.start();
         } catch (Exception e) {
             Log.d("mylog", "Error playing in SoundHandler: " + e.toString());
         }
     }
 
     private void stopPlaying() {
-        if (m != null && m.isPlaying()) {
-            m.stop();
-            m.release();
-            m = new MediaPlayer();
-            m.reset();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    private class MediaPlayerAsyncTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... urls) {
+            String mp3Url = urls[0];
+            startAudioStream(mp3Url);
+            return null;
         }
     }
 }

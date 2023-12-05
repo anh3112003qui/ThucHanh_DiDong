@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         String sms = tvContent.getText().toString();
 
         SmsMessage smsMsg;
-        System.out.println("999999999999" + messages);
         for (int i=0; i < messages.length; i++) {
             if (android.os.Build.VERSION.SDK_INT >= 23) {
                 String format = bundle.getString("format");

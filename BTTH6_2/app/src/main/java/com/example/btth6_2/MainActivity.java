@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BATTERY_STATS)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.BATTERY_STATS}, 23);
+                    new String[]{Manifest.permission.BATTERY_STATS}, 25);
         }
         initPowerStateChangeReceiver();
     }
